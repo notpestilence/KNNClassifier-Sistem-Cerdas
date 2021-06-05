@@ -11,6 +11,10 @@ Dikerjakan untuk memenuhi tugas minggu ke-12 semester genap 2020/2021, mata kuli
 Pada pengerjaan ini, digunakan algoritma K-Nearest Neighbors untuk melatih model agar dapat mengklasifikasikan segmentasi pelanggan atau *customer segmentation* sebuah perusahaan mobil.
 Data sebagai basis pengerjaan diambil dari [laman Kaggle berikut](https://www.kaggle.com/kaushiksuresh147/customer-segmentation).
 
+Performa *classifier* yang belum sepenuhnya akurat, dapat diperkirakan muncul dari beberapa faktor, yakni:
+1. Penggunaan `euclidean` sebagai pengukuran jarak utama antar *datapoint*. Implementasi umumnya menggunakan `minkowski`;
+2. Tidak melaksanakan *hyperparameter tuning* melalui `GridSearchCV` dalam rangka mencari kombinasi parameter yang pas untuk `KNeighborsClassifier()` sebelum proses *learning*.
+
 ---
 
 ### Catatan kaki:
