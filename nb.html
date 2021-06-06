@@ -13328,7 +13328,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13341,26 +13341,30 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>ID                   int64
-Gender              object
-Ever_Married        object
-Age                  int64
-Graduated           object
-Profession          object
-Work_Experience    float64
-Spending_Score      object
-Family_Size        float64
-Var_1               object
-Segmentation        object
-dtype: object</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 8068 entries, 0 to 8067
+Data columns (total 11 columns):
+ #   Column           Non-Null Count  Dtype  
+---  ------           --------------  -----  
+ 0   ID               8068 non-null   int64  
+ 1   Gender           8068 non-null   object 
+ 2   Ever_Married     7928 non-null   object 
+ 3   Age              8068 non-null   int64  
+ 4   Graduated        7990 non-null   object 
+ 5   Profession       7944 non-null   object 
+ 6   Work_Experience  7239 non-null   float64
+ 7   Spending_Score   8068 non-null   object 
+ 8   Family_Size      7733 non-null   float64
+ 9   Var_1            7992 non-null   object 
+ 10  Segmentation     8068 non-null   object 
+dtypes: float64(2), int64(2), object(7)
+memory usage: 693.5+ KB
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -13835,8 +13839,8 @@ Name: Segmentation, dtype: int64
 <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Gender&#39;</span><span class="p">,</span> <span class="s1">&#39;Ever_Married&#39;</span><span class="p">,</span> <span class="s1">&#39;Graduated&#39;</span><span class="p">,</span> <span class="s1">&#39;Profession&#39;</span><span class="p">,</span> <span class="s1">&#39;Spending_Score&#39;</span><span class="p">]:</span>
     <span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
     <span class="n">features_test</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">features_test</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
-    <span class="c1">##print(&quot;For column: &quot;, col)</span>
-    <span class="c1">##print(get_integer_mapping(encoder))</span>
+    <span class="c1">## print(&quot;For column: &quot;, col)</span>
+    <span class="c1">## print(get_integer_mapping(encoder))</span>
 </pre></div>
 
     </div>
@@ -13874,45 +13878,6 @@ For column:  Spending_Score
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We do the same towards labels:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[167]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;A&#39;: 0, &#39;B&#39;: 1, &#39;C&#39;: 2, &#39;D&#39;: 3}
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Normalization">Normalization<a class="anchor-link" href="#Normalization">&#182;</a></h2><p>The feature <code>Age</code> has potential to squish our other features flat when plotting towards one another. Thus, we perform <strong>Normalization</strong> to prevent this from happening.</p>
 <p>We can do this also from the <code>sklearn.preprocessing</code> class.</p>
 
@@ -13929,7 +13894,7 @@ For column:  Spending_Score
 <span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span> <span class="c1"># Instantiate scaler object</span>
 <span class="n">features</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">features</span><span class="p">[[</span><span class="s1">&#39;Age&#39;</span><span class="p">]])</span>
 
-<span class="n">features</span>
+<span class="n">features</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13977,129 +13942,117 @@ For column:  Spending_Score
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
+      <th>6087</th>
+      <td>1</td>
+      <td>2</td>
+      <td>0.492958</td>
       <td>1</td>
       <td>0</td>
-      <td>0.056338</td>
-      <td>0</td>
-      <td>5</td>
-      <td>1.0</td>
-      <td>2</td>
+      <td>0.0</td>
+      <td>1</td>
       <td>4.0</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>2</td>
-      <td>0.281690</td>
+      <th>6723</th>
       <td>1</td>
       <td>2</td>
+      <td>0.183099</td>
+      <td>0</td>
+      <td>1</td>
       <td>0.0</td>
       <td>0</td>
-      <td>3.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0</td>
-      <td>2</td>
-      <td>0.690141</td>
-      <td>1</td>
-      <td>2</td>
-      <td>1.0</td>
-      <td>2</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1</td>
-      <td>2</td>
-      <td>0.690141</td>
-      <td>1</td>
-      <td>7</td>
-      <td>0.0</td>
-      <td>1</td>
       <td>2.0</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>0</td>
+      <th>130</th>
+      <td>1</td>
       <td>2</td>
-      <td>0.309859</td>
+      <td>0.295775</td>
       <td>1</td>
-      <td>3</td>
-      <td>0.0</td>
+      <td>4</td>
+      <td>9.0</td>
       <td>1</td>
-      <td>6.0</td>
+      <td>5.0</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>8063</th>
+      <th>3792</th>
       <td>1</td>
-      <td>0</td>
-      <td>0.056338</td>
-      <td>0</td>
-      <td>9</td>
-      <td>0.0</td>
       <td>2</td>
-      <td>7.0</td>
-    </tr>
-    <tr>
-      <th>8064</th>
-      <td>1</td>
-      <td>0</td>
       <td>0.239437</td>
       <td>0</td>
-      <td>4</td>
+      <td>8</td>
+      <td>0.0</td>
+      <td>2</td>
       <td>3.0</td>
+    </tr>
+    <tr>
+      <th>4444</th>
+      <td>0</td>
       <td>2</td>
+      <td>0.154930</td>
+      <td>1</td>
+      <td>5</td>
+      <td>6.0</td>
+      <td>0</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>5685</th>
+      <td>1</td>
+      <td>2</td>
+      <td>0.535211</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4.0</td>
+      <td>0</td>
       <td>4.0</td>
     </tr>
     <tr>
-      <th>8065</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0.211268</td>
-      <td>1</td>
-      <td>5</td>
-      <td>1.0</td>
-      <td>2</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>8066</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0.126761</td>
-      <td>1</td>
-      <td>5</td>
-      <td>1.0</td>
-      <td>2</td>
-      <td>4.0</td>
-    </tr>
-    <tr>
-      <th>8067</th>
+      <th>103</th>
       <td>1</td>
       <td>2</td>
-      <td>0.267606</td>
-      <td>1</td>
+      <td>0.281690</td>
+      <td>0</td>
       <td>4</td>
       <td>0.0</td>
+      <td>1</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>3988</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0.295775</td>
+      <td>1</td>
+      <td>0</td>
+      <td>7.0</td>
+      <td>2</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2567</th>
+      <td>1</td>
+      <td>2</td>
+      <td>0.338028</td>
+      <td>1</td>
+      <td>0</td>
+      <td>9.0</td>
+      <td>0</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>3593</th>
+      <td>1</td>
+      <td>2</td>
+      <td>0.690141</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1.0</td>
       <td>0</td>
       <td>3.0</td>
     </tr>
   </tbody>
 </table>
-<p>8068 rows × 8 columns</p>
 </div>
 </div>
 
@@ -14113,7 +14066,7 @@ For column:  Spending_Score
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Modelling">Modelling<a class="anchor-link" href="#Modelling">&#182;</a></h1><p>Our data is now ready to be fed into the model. For this instance, we'll be using <code>K-Nearest Neighbors</code> class of <code>scikit-learn</code>, yet there are more appropriate deep learning models to be fed this kind of data.</p>
-<h2 id="Training-Validation-Splitting">Training-Validation Splitting<a class="anchor-link" href="#Training-Validation-Splitting">&#182;</a></h2><p>We split our data into training and validation sets, as to train the model on training data and testing model’s accuracy on the validation set. We choose a 80%–20% split for our training and validation set. Once our model has received a good enough performance, we can test it on our unseen <code>test_df</code> data to deliver the final verdict.</p>
+<h2 id="Training-Validation-Splitting">Training-Validation Splitting<a class="anchor-link" href="#Training-Validation-Splitting">&#182;</a></h2><p>We split our data into training and validation sets, as to train the model on training data and testing model’s accuracy on the validation set. We choose a 70-30% split for our training and validation set. Once our model has received a good enough performance, we can test it on our unseen <code>test_df</code> data to deliver the final verdict.</p>
 <p>Import the necessities below:</p>
 
 </div>
@@ -14126,7 +14079,7 @@ For column:  Spending_Score
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-<span class="n">features_train</span><span class="p">,</span> <span class="n">features_val</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">,</span> <span class="n">labels_val</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> 
+<span class="n">features_train</span><span class="p">,</span> <span class="n">features_val</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">,</span> <span class="n">labels_val</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> 
 <span class="c1"># random_state provides reproducibility :)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training set consists of&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_train</span><span class="p">),</span> <span class="s2">&quot;datapoints.&quot;</span><span class="p">)</span>
@@ -14147,8 +14100,8 @@ For column:  Spending_Score
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Training set consists of 6454 datapoints.
-Validation set consists of 1614 datapoints.
+<pre>Training set consists of 5647 datapoints.
+Validation set consists of 2421 datapoints.
 </pre>
 </div>
 </div>
@@ -14170,7 +14123,7 @@ Validation set consists of 1614 datapoints.
 <li><code>labels_test</code>, unseen labels for ground truth</li>
 </ol>
 <h2 id="Baseline-Initialization">Baseline Initialization<a class="anchor-link" href="#Baseline-Initialization">&#182;</a></h2><p>We start with a dummy model before performing the classification task. This is done to provide a baseline, which we'll use to evaluate whether the model being made performs reasonably or not.</p>
-<p>For this project, the baseline is calculated with the <code>uniform</code> method along the evaluation metric Mean Absolute Error.</p>
+<p>For this project, the baseline is calculated with the <code>uniform</code> method along the evaluation metric F1-Score due to multi-class classification.</p>
 <p>Feel free to use other methods for the reproducibility of the result.</p>
 
 </div>
@@ -14206,7 +14159,7 @@ Validation set consists of 1614 datapoints.
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>The model must have a (weighted) F1 score higher than 0.224
+<pre>The model must have a (weighted) F1 score higher than 0.245
 </pre>
 </div>
 </div>
@@ -14235,7 +14188,8 @@ Validation set consists of 1614 datapoints.
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">200</span><span class="p">):</span>
     <span class="n">classifier</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">x</span><span class="p">)</span>
     <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features_train</span><span class="p">,</span> <span class="n">labels_train</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
-    <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">features_val</span><span class="p">,</span> <span class="n">labels_val</span><span class="p">))</span>
+    <span class="n">y_iter</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features_val</span><span class="p">)</span>
+    <span class="n">scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f1_score</span><span class="p">(</span><span class="n">labels_val</span><span class="p">,</span> <span class="n">y_iter</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span> <span class="n">scores</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
@@ -14294,10 +14248,10 @@ z
       <defs>
        <path d="M 0 0 
 L 0 3.5 
-" id="medc227e322" style="stroke:#ffffff;stroke-width:0.8;"/>
+" id="m8424ec99b8" style="stroke:#ffffff;stroke-width:0.8;"/>
       </defs>
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="82.066064" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="82.066064" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_1">
@@ -14333,7 +14287,7 @@ z
     <g id="xtick_2">
      <g id="line2d_2">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="171.735486" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="171.735486" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_2">
@@ -14397,7 +14351,7 @@ z
     <g id="xtick_3">
      <g id="line2d_3">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="261.404907" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="261.404907" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_3">
@@ -14411,7 +14365,7 @@ z
     <g id="xtick_4">
      <g id="line2d_4">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="351.074329" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="351.074329" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_4">
@@ -14436,7 +14390,7 @@ z
     <g id="xtick_5">
      <g id="line2d_5">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="440.74375" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="440.74375" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_5">
@@ -14466,7 +14420,7 @@ z
     <g id="xtick_6">
      <g id="line2d_6">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="530.413171" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="530.413171" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_6">
@@ -14481,7 +14435,7 @@ z
     <g id="xtick_7">
      <g id="line2d_7">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="620.082593" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="620.082593" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_7">
@@ -14496,7 +14450,7 @@ z
     <g id="xtick_8">
      <g id="line2d_8">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="709.752014" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="709.752014" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_8">
@@ -14511,7 +14465,7 @@ z
     <g id="xtick_9">
      <g id="line2d_9">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="799.421436" xlink:href="#medc227e322" y="550.8"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="799.421436" xlink:href="#m8424ec99b8" y="550.8"/>
       </g>
      </g>
      <g id="text_9">
@@ -14650,10 +14604,10 @@ z
       <defs>
        <path d="M 0 0 
 L -3.5 0 
-" id="m0f39fc7dc1" style="stroke:#ffffff;stroke-width:0.8;"/>
+" id="m060b2e8570" style="stroke:#ffffff;stroke-width:0.8;"/>
       </defs>
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m0f39fc7dc1" y="524.19021"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m060b2e8570" y="538.257989"/>
       </g>
      </g>
      <g id="text_11">
@@ -14683,7 +14637,7 @@ L 4.890625 26.703125
 z
 " id="DejaVuSans-52"/>
       </defs>
-      <g style="fill:#ffffff;" transform="translate(20.878125 527.989429)scale(0.1 -0.1)">
+      <g style="fill:#ffffff;" transform="translate(20.878125 542.057208)scale(0.1 -0.1)">
        <use xlink:href="#DejaVuSans-48"/>
        <use x="63.623047" xlink:href="#DejaVuSans-46"/>
        <use x="95.410156" xlink:href="#DejaVuSans-52"/>
@@ -14694,12 +14648,12 @@ z
     <g id="ytick_2">
      <g id="line2d_11">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m0f39fc7dc1" y="421.932587"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m060b2e8570" y="427.960738"/>
       </g>
      </g>
      <g id="text_12">
       <!-- 0.42 -->
-      <g style="fill:#ffffff;" transform="translate(20.878125 425.731806)scale(0.1 -0.1)">
+      <g style="fill:#ffffff;" transform="translate(20.878125 431.759957)scale(0.1 -0.1)">
        <use xlink:href="#DejaVuSans-48"/>
        <use x="63.623047" xlink:href="#DejaVuSans-46"/>
        <use x="95.410156" xlink:href="#DejaVuSans-52"/>
@@ -14710,12 +14664,12 @@ z
     <g id="ytick_3">
      <g id="line2d_12">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m0f39fc7dc1" y="319.674965"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m060b2e8570" y="317.663487"/>
       </g>
      </g>
      <g id="text_13">
       <!-- 0.44 -->
-      <g style="fill:#ffffff;" transform="translate(20.878125 323.474184)scale(0.1 -0.1)">
+      <g style="fill:#ffffff;" transform="translate(20.878125 321.462706)scale(0.1 -0.1)">
        <use xlink:href="#DejaVuSans-48"/>
        <use x="63.623047" xlink:href="#DejaVuSans-46"/>
        <use x="95.410156" xlink:href="#DejaVuSans-52"/>
@@ -14726,7 +14680,7 @@ z
     <g id="ytick_4">
      <g id="line2d_13">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m0f39fc7dc1" y="217.417343"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m060b2e8570" y="207.366236"/>
       </g>
      </g>
      <g id="text_14">
@@ -14763,7 +14717,7 @@ Q 48.484375 72.75 52.59375 71.296875
 z
 " id="DejaVuSans-54"/>
       </defs>
-      <g style="fill:#ffffff;" transform="translate(20.878125 221.216561)scale(0.1 -0.1)">
+      <g style="fill:#ffffff;" transform="translate(20.878125 211.165455)scale(0.1 -0.1)">
        <use xlink:href="#DejaVuSans-48"/>
        <use x="63.623047" xlink:href="#DejaVuSans-46"/>
        <use x="95.410156" xlink:href="#DejaVuSans-52"/>
@@ -14774,7 +14728,7 @@ z
     <g id="ytick_5">
      <g id="line2d_14">
       <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m0f39fc7dc1" y="115.15972"/>
+       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m060b2e8570" y="97.068986"/>
       </g>
      </g>
      <g id="text_15">
@@ -14820,7 +14774,7 @@ Q 18.3125 60.0625 18.3125 54.390625
 z
 " id="DejaVuSans-56"/>
       </defs>
-      <g style="fill:#ffffff;" transform="translate(20.878125 118.958939)scale(0.1 -0.1)">
+      <g style="fill:#ffffff;" transform="translate(20.878125 100.868204)scale(0.1 -0.1)">
        <use xlink:href="#DejaVuSans-48"/>
        <use x="63.623047" xlink:href="#DejaVuSans-46"/>
        <use x="95.410156" xlink:href="#DejaVuSans-52"/>
@@ -14828,23 +14782,7 @@ z
       </g>
      </g>
     </g>
-    <g id="ytick_6">
-     <g id="line2d_15">
-      <g>
-       <use style="fill:#ffffff;stroke:#ffffff;stroke-width:0.8;" x="50.14375" xlink:href="#m0f39fc7dc1" y="12.902098"/>
-      </g>
-     </g>
-     <g id="text_16">
-      <!-- 0.50 -->
-      <g style="fill:#ffffff;" transform="translate(20.878125 16.701317)scale(0.1 -0.1)">
-       <use xlink:href="#DejaVuSans-48"/>
-       <use x="63.623047" xlink:href="#DejaVuSans-46"/>
-       <use x="95.410156" xlink:href="#DejaVuSans-53"/>
-       <use x="159.033203" xlink:href="#DejaVuSans-48"/>
-      </g>
-     </g>
-    </g>
-    <g id="text_17">
+    <g id="text_16">
      <!-- Accuracy -->
      <defs>
       <path d="M 34.1875 63.1875 
@@ -14927,194 +14865,207 @@ z
      </g>
     </g>
    </g>
-   <g id="line2d_16">
-    <path clip-path="url(#paaddfa0ce5)" d="M 85.652841 310.678322 
+   <g id="line2d_15">
+    <path clip-path="url(#p57a75222d3)" d="M 85.652841 356.944477 
 L 89.239618 526.090909 
-L 92.826395 212.475524 
-L 96.413171 298.006993 
-L 99.999948 190.300699 
-L 103.586725 231.482517 
-L 107.173502 202.972028 
-L 110.760279 177.629371 
-L 114.347056 139.615385 
-L 117.933833 104.769231 
-L 121.52061 85.762238 
-L 128.694163 85.762238 
-L 132.28094 107.937063 
-L 135.867717 98.433566 
-L 139.454494 54.083916 
-L 143.041271 60.41958 
-L 146.628048 54.083916 
-L 150.214824 54.083916 
-L 153.801601 31.909091 
-L 157.388378 31.909091 
-L 160.975155 38.244755 
-L 164.561932 73.090909 
-L 168.148709 63.587413 
-L 171.735486 41.412587 
-L 175.322262 44.58042 
-L 178.909039 44.58042 
-L 182.495816 38.244755 
-L 186.082593 47.748252 
-L 189.66937 31.909091 
-L 193.256147 63.587413 
-L 196.842924 66.755245 
-L 200.4297 41.412587 
-L 204.016477 66.755245 
-L 211.190031 79.426573 
-L 214.776808 73.090909 
-L 218.363585 95.265734 
-L 221.950362 63.587413 
-L 225.537138 76.258741 
-L 229.123915 50.916084 
-L 232.710692 47.748252 
-L 236.297469 63.587413 
-L 239.884246 69.923077 
-L 243.471023 69.923077 
-L 250.644576 57.251748 
-L 254.231353 41.412587 
-L 257.81813 57.251748 
-L 264.991684 69.923077 
-L 268.578461 41.412587 
-L 272.165238 50.916084 
-L 275.752014 38.244755 
-L 279.338791 69.923077 
-L 282.925568 47.748252 
-L 286.512345 47.748252 
-L 290.099122 60.41958 
-L 293.685899 50.916084 
-L 297.272676 54.083916 
-L 304.446229 98.433566 
-L 308.033006 79.426573 
-L 311.619783 76.258741 
-L 315.20656 47.748252 
-L 318.793337 92.097902 
-L 322.380114 82.594406 
-L 325.96689 79.426573 
-L 329.553667 69.923077 
-L 333.140444 79.426573 
-L 340.313998 79.426573 
-L 343.900775 82.594406 
-L 347.487552 92.097902 
-L 351.074329 98.433566 
-L 354.661105 88.93007 
-L 358.247882 111.104895 
-L 361.834659 66.755245 
-L 365.421436 82.594406 
-L 369.008213 92.097902 
-L 376.181767 85.762238 
-L 379.768543 85.762238 
-L 383.35532 92.097902 
-L 386.942097 82.594406 
-L 390.528874 69.923077 
-L 394.115651 85.762238 
-L 397.702428 98.433566 
-L 401.289205 101.601399 
-L 404.875981 88.93007 
-L 408.462758 111.104895 
-L 412.049535 117.440559 
-L 415.636312 98.433566 
-L 419.223089 117.440559 
-L 422.809866 107.937063 
-L 426.396643 88.93007 
-L 429.983419 111.104895 
-L 433.570196 98.433566 
-L 440.74375 92.097902 
-L 444.330527 85.762238 
-L 447.917304 95.265734 
-L 451.504081 63.587413 
-L 455.090857 73.090909 
-L 458.677634 57.251748 
-L 462.264411 66.755245 
-L 465.851188 69.923077 
-L 469.437965 63.587413 
-L 473.024742 92.097902 
-L 476.611519 63.587413 
-L 480.198295 57.251748 
-L 483.785072 69.923077 
-L 487.371849 60.41958 
-L 490.958626 73.090909 
-L 494.545403 76.258741 
-L 498.13218 76.258741 
-L 501.718957 73.090909 
-L 505.305733 88.93007 
-L 508.89251 92.097902 
-L 512.479287 104.769231 
-L 516.066064 69.923077 
-L 519.652841 73.090909 
-L 523.239618 69.923077 
-L 526.826395 69.923077 
-L 530.413171 85.762238 
-L 533.999948 98.433566 
-L 537.586725 82.594406 
-L 541.173502 88.93007 
-L 544.760279 88.93007 
-L 548.347056 101.601399 
-L 551.933833 92.097902 
-L 555.52061 101.601399 
-L 559.107386 88.93007 
-L 562.694163 82.594406 
-L 569.867717 88.93007 
-L 573.454494 82.594406 
-L 577.041271 92.097902 
-L 580.628048 82.594406 
-L 591.388378 111.104895 
-L 594.975155 111.104895 
-L 598.561932 104.769231 
-L 602.148709 104.769231 
-L 605.735486 117.440559 
-L 609.322262 98.433566 
-L 612.909039 120.608392 
-L 616.495816 107.937063 
-L 620.082593 126.944056 
-L 623.66937 123.776224 
-L 627.256147 136.447552 
-L 630.842924 136.447552 
-L 634.4297 123.776224 
-L 638.016477 126.944056 
-L 645.190031 120.608392 
-L 648.776808 123.776224 
-L 652.363585 117.440559 
-L 655.950362 123.776224 
-L 659.537138 104.769231 
-L 663.123915 104.769231 
-L 666.710692 126.944056 
-L 670.297469 126.944056 
-L 673.884246 133.27972 
-L 677.471023 117.440559 
-L 684.644576 136.447552 
-L 688.231353 136.447552 
-L 691.81813 145.951049 
-L 695.404907 130.111888 
-L 698.991684 133.27972 
-L 702.578461 117.440559 
-L 706.165238 133.27972 
-L 709.752014 123.776224 
-L 713.338791 126.944056 
-L 716.925568 139.615385 
-L 720.512345 136.447552 
-L 724.099122 139.615385 
-L 727.685899 136.447552 
-L 731.272676 145.951049 
-L 734.859452 152.286713 
-L 738.446229 149.118881 
-L 742.033006 155.454545 
-L 745.619783 158.622378 
-L 749.20656 158.622378 
-L 752.793337 139.615385 
-L 756.380114 142.783217 
-L 759.96689 164.958042 
-L 763.553667 168.125874 
-L 767.140444 158.622378 
-L 770.727221 158.622378 
-L 774.313998 152.286713 
-L 777.900775 158.622378 
-L 781.487552 149.118881 
-L 785.074329 133.27972 
-L 788.661105 142.783217 
-L 792.247882 142.783217 
-L 795.834659 136.447552 
-L 795.834659 136.447552 
+L 92.826395 243.188655 
+L 96.413171 340.917673 
+L 99.999948 182.664779 
+L 103.586725 249.039079 
+L 107.173502 212.893707 
+L 110.760279 156.631408 
+L 114.347056 176.599152 
+L 117.933833 121.973524 
+L 121.52061 84.634296 
+L 125.107386 122.158422 
+L 128.694163 115.501813 
+L 132.28094 85.709547 
+L 135.867717 107.742902 
+L 139.454494 107.25475 
+L 143.041271 77.219336 
+L 146.628048 87.060622 
+L 150.214824 100.620665 
+L 153.801601 98.741505 
+L 157.388378 79.244219 
+L 160.975155 57.329491 
+L 164.561932 74.011714 
+L 168.148709 80.661186 
+L 171.735486 80.380491 
+L 175.322262 122.841824 
+L 178.909039 77.683594 
+L 182.495816 110.115369 
+L 186.082593 101.81099 
+L 189.66937 99.288648 
+L 193.256147 89.982427 
+L 196.842924 72.939471 
+L 200.4297 31.909091 
+L 204.016477 58.910924 
+L 207.603254 61.402308 
+L 211.190031 61.837628 
+L 214.776808 75.365841 
+L 218.363585 68.278491 
+L 221.950362 72.486254 
+L 225.537138 58.321995 
+L 229.123915 66.358564 
+L 232.710692 64.225798 
+L 236.297469 52.518207 
+L 239.884246 61.086125 
+L 243.471023 60.322765 
+L 247.0578 63.4812 
+L 250.644576 88.018186 
+L 254.231353 84.170324 
+L 257.81813 74.212545 
+L 261.404907 82.198494 
+L 264.991684 85.988376 
+L 268.578461 54.311976 
+L 272.165238 81.688804 
+L 275.752014 78.856744 
+L 279.338791 98.641381 
+L 282.925568 75.880984 
+L 286.512345 74.515032 
+L 290.099122 63.362714 
+L 293.685899 84.414462 
+L 297.272676 92.817601 
+L 300.859452 84.826514 
+L 304.446229 84.759572 
+L 308.033006 65.97583 
+L 311.619783 94.888135 
+L 315.20656 89.401186 
+L 318.793337 90.726683 
+L 322.380114 118.21561 
+L 325.96689 102.249433 
+L 329.553667 109.793055 
+L 333.140444 112.897685 
+L 336.727221 109.708815 
+L 340.313998 117.741127 
+L 343.900775 121.981842 
+L 347.487552 129.82639 
+L 351.074329 126.238366 
+L 354.661105 145.125601 
+L 358.247882 136.463274 
+L 361.834659 148.46586 
+L 365.421436 128.280225 
+L 369.008213 149.844245 
+L 372.59499 145.172394 
+L 376.181767 177.420021 
+L 379.768543 141.392826 
+L 383.35532 145.416516 
+L 386.942097 141.397051 
+L 390.528874 149.761992 
+L 394.115651 138.902586 
+L 397.702428 159.740866 
+L 401.289205 164.096372 
+L 404.875981 130.904729 
+L 408.462758 136.509692 
+L 412.049535 126.691784 
+L 415.636312 136.463926 
+L 419.223089 132.237978 
+L 422.809866 140.30482 
+L 426.396643 124.185983 
+L 429.983419 135.650978 
+L 433.570196 145.723196 
+L 437.156973 177.072716 
+L 440.74375 167.854473 
+L 444.330527 160.740139 
+L 447.917304 164.013724 
+L 451.504081 162.76166 
+L 455.090857 158.575915 
+L 458.677634 176.664337 
+L 462.264411 150.248685 
+L 465.851188 145.012556 
+L 469.437965 134.272608 
+L 473.024742 146.614069 
+L 476.611519 159.40345 
+L 480.198295 152.651695 
+L 483.785072 159.937918 
+L 487.371849 165.55637 
+L 490.958626 145.210469 
+L 494.545403 161.078137 
+L 498.13218 177.636548 
+L 501.718957 158.187932 
+L 505.305733 141.619729 
+L 508.89251 145.54152 
+L 512.479287 134.298688 
+L 516.066064 156.791403 
+L 519.652841 167.564461 
+L 523.239618 161.360811 
+L 526.826395 157.528325 
+L 530.413171 163.271632 
+L 533.999948 161.904091 
+L 537.586725 150.762867 
+L 541.173502 150.48049 
+L 544.760279 167.117982 
+L 548.347056 177.681781 
+L 551.933833 166.510989 
+L 555.52061 173.419337 
+L 559.107386 178.108877 
+L 562.694163 158.859757 
+L 566.28094 160.919285 
+L 569.867717 175.712197 
+L 573.454494 159.732208 
+L 577.041271 180.019285 
+L 580.628048 161.699067 
+L 584.214824 176.363454 
+L 587.801601 167.752637 
+L 591.388378 171.364917 
+L 594.975155 150.067004 
+L 598.561932 139.993908 
+L 602.148709 146.324332 
+L 605.735486 160.691236 
+L 609.322262 153.409951 
+L 612.909039 152.179371 
+L 616.495816 162.9302 
+L 620.082593 146.769768 
+L 623.66937 152.181157 
+L 627.256147 161.336356 
+L 630.842924 165.748751 
+L 634.4297 151.335774 
+L 638.016477 146.736076 
+L 641.603254 143.068315 
+L 645.190031 141.107316 
+L 648.776808 147.46957 
+L 652.363585 165.693503 
+L 655.950362 157.166336 
+L 659.537138 154.865022 
+L 663.123915 171.258496 
+L 666.710692 151.798778 
+L 670.297469 164.022172 
+L 673.884246 151.786805 
+L 677.471023 174.697824 
+L 681.0578 182.57225 
+L 684.644576 178.453695 
+L 688.231353 172.986465 
+L 691.81813 153.645792 
+L 695.404907 168.571368 
+L 698.991684 147.28605 
+L 702.578461 167.013048 
+L 706.165238 164.337239 
+L 709.752014 172.618365 
+L 713.338791 164.934316 
+L 716.925568 162.763383 
+L 720.512345 181.069522 
+L 724.099122 164.596188 
+L 727.685899 164.652449 
+L 731.272676 167.145348 
+L 734.859452 177.926985 
+L 738.446229 169.173824 
+L 742.033006 177.345484 
+L 745.619783 184.536077 
+L 749.20656 188.807343 
+L 752.793337 190.532885 
+L 756.380114 178.209095 
+L 759.96689 170.66998 
+L 763.553667 186.011455 
+L 767.140444 192.407114 
+L 770.727221 181.723242 
+L 774.313998 157.53067 
+L 777.900775 157.001246 
+L 781.487552 164.311328 
+L 785.074329 164.426003 
+L 788.661105 151.295624 
+L 792.247882 164.057697 
+L 795.834659 154.4262 
+L 795.834659 154.4262 
 " style="fill:none;stroke:#8dd3c7;stroke-linecap:square;stroke-width:1.5;"/>
    </g>
    <g id="patch_3">
@@ -15140,7 +15091,7 @@ L 831.34375 7.2
   </g>
  </g>
  <defs>
-  <clipPath id="paaddfa0ce5">
+  <clipPath id="p57a75222d3">
    <rect height="543.6" width="781.2" x="50.14375" y="7.2"/>
   </clipPath>
  </defs>
@@ -15156,7 +15107,7 @@ L 831.34375 7.2
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>The maximum accuracy has reached in k-value:  20
+<pre>The maximum accuracy has reached in k-value:  33
 </pre>
 </div>
 </div>
@@ -15170,7 +15121,7 @@ L 831.34375 7.2
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">classifier</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">33</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;euclidean&#39;</span><span class="p">)</span>
 <span class="n">classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features_train</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">)</span>
 
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features_val</span><span class="p">)</span>
@@ -15198,16 +15149,16 @@ L 831.34375 7.2
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>              precision    recall  f1-score   support
 
-           A       0.39      0.40      0.39       391
-           B       0.40      0.34      0.37       369
-           C       0.51      0.54      0.52       380
-           D       0.63      0.67      0.65       474
+           A       0.42      0.40      0.41       597
+           B       0.39      0.34      0.36       552
+           C       0.52      0.55      0.53       580
+           D       0.63      0.69      0.66       692
 
-    accuracy                           0.50      1614
-   macro avg       0.48      0.49      0.48      1614
-weighted avg       0.49      0.50      0.49      1614
+    accuracy                           0.51      2421
+   macro avg       0.49      0.50      0.49      2421
+weighted avg       0.50      0.51      0.50      2421
 
-The model has a (weighted) F1 score of 0.493 ,  120 % better than the baseline.
+The model has a (weighted) F1 score of 0.501 ,  104 % better than the baseline.
 </pre>
 </div>
 </div>
@@ -15223,6 +15174,19 @@ The model has a (weighted) F1 score of 0.493 ,  120 % better than the baseline.
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -15315,8 +15279,8 @@ The model has a (weighted) F1 score of 0.493 ,  120 % better than the baseline.
     <tr>
       <th>2622</th>
       <td>B</td>
-      <td>B</td>
-      <td>True</td>
+      <td>C</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>2623</th>
@@ -15405,11 +15369,11 @@ The model has a (weighted) F1 score of 0.493 ,  120 % better than the baseline.
   <tbody>
     <tr>
       <th>False</th>
-      <td>1880</td>
+      <td>1869</td>
     </tr>
     <tr>
       <th>True</th>
-      <td>747</td>
+      <td>758</td>
     </tr>
   </tbody>
 </table>
@@ -15425,7 +15389,7 @@ The model has a (weighted) F1 score of 0.493 ,  120 % better than the baseline.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>In the end, the classifier we made ended up only being able to predict <strong>747</strong> true classes out of a total of 2627 examples. This is relatively low. Yet again, this is pretty much to be expected since we didn't implement hyperparameter tuning at all via <code>GridSearchCV</code>. We also stick to the <code>euclidean</code> distance as opposed to the default <code>minkowski</code> given by the class.</p>
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>In the end, the classifier we made ended up only being able to predict <strong>758</strong> true classes out of a total of 2627 examples. This is relatively low. Yet again, this is pretty much to be expected since we didn't implement hyperparameter tuning at all via <code>GridSearchCV</code>. We also stick to the <code>euclidean</code> distance as opposed to the default <code>minkowski</code> given by the class.</p>
 
 </div>
 </div>
